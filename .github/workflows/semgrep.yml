@@ -1,0 +1,20 @@
+name: Semgrep SAST
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  semgrep-scan:
+    name: Run Semgrep SAST
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep Scan
+        run: semgrep scan --config=p/default --error .
